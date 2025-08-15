@@ -13,15 +13,15 @@
     --font-size-modal-title: 28px;
     --font-size-modal-button: 28px;
 
-    --primary-color: #0071ea;
+    --primary-color: #ca626f;
     --secundary-color: #d6eaff;
     --contrast-dark-color: #4d4d4d;
     --contrast-ligth-color: #fff;
-    --info-color: #df2525;
+    --info-color: #8525df;
     --sucess-color: #047900;
     --transparency-color: #4d4d4d33;
 
-    --shadow: 0 5px 10px #55a6ff38;
+    --shadow: 0 5px 10px #ff55a438;
 }
 
 @media (min-width: 800px) {

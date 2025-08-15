@@ -89,7 +89,7 @@
 .banner__button:hover {
     transform: translateY(-4px) !important;
     box-shadow: var(--shadow-extra-deep) !important;
-    background: linear-gradient(145deg, #1a73e8, #1557b0) !important;
+    background: linear-gradient(145deg, #ca626f, #ac445e) !important;
 }
 
 .banner__button:hover::before {
@@ -129,7 +129,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(26, 115, 232, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(232, 26, 112, 0.1), transparent);
     transition: left 0.4s;
 }
 
@@ -153,7 +153,7 @@
 /* Botón de contacto */
 .contacto__button {
     padding: 18px 35px !important;
-    background: linear-gradient(145deg, var(--color_fondo-o-letra_botones-2), #1a73e8) !important;
+    background: linear-gradient(145deg, var(--color_fondo-o-letra_botones-2), #ca626f) !important;
     color: #FFFFFF !important;
     border: none !important;
     border-radius: var(--border-radius-round) !important;
@@ -182,7 +182,7 @@
 .contacto__button:hover {
     transform: translateY(-3px) !important;
     box-shadow: var(--shadow-extra-deep) !important;
-    background: linear-gradient(145deg, #1a73e8, #1557b0) !important;
+    background: linear-gradient(145deg, #ca626f, #ac445e) !important;
 }
 
 .contacto__button:hover::before {
