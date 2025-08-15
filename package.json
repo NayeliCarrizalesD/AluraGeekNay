@@ -1,0 +1,13 @@
+{
+  "name": "alura-geek",
+  "version": "1.0.0",
+  "description": "Proyecto Alura Geek",
+  "main": "index.html",
+  "scripts": {
+    "start": "json-server --watch db.json --port 3000",
+    "dev": "json-server --watch db.json --port 3000 --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}

@@ -1,0 +1,359 @@
+/* Estilos mejorados para botones - Mayor profundidad y redondez */
+
+/* Variables para efectos de profundidad */
+:root {
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-deep: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --shadow-extra-deep: 0 12px 24px rgba(0, 0, 0, 0.25);
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    --border-radius-button: 25px;
+    --border-radius-round: 50px;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Botón del header - Login */
+.header__login-button {
+    border: none !important;
+    color: var(--color_fondo-o-letra_botones-2) !important;
+    padding: 16px 35px !important;
+    margin: 0 1rem !important;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0) !important;
+    border: 2px solid var(--color_fondo-o-letra_botones-2) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    border-radius: var(--border-radius-round) !important;
+    box-shadow: var(--shadow-medium) !important;
+    transition: var(--transition-smooth) !important;
+    font-weight: 600 !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.header__login-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
+
+.header__login-button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: var(--shadow-extra-deep) !important;
+    border-color: var(--color_fondo-o-letra_botones-2) !important;
+    background: linear-gradient(145deg, #f8f8f8, #e8e8e8) !important;
+}
+
+.header__login-button:hover::before {
+    left: 100%;
+}
+
+.header__login-button:active {
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-medium), var(--shadow-inset) !important;
+}
+
+/* Botón del banner */
+.banner__button {
+    border: none !important;
+    outline: none !important;
+    background: linear-gradient(145deg, var(--color_fondo-o-letra_botones-2), #1a73e8) !important;
+    color: #FFFFFF !important;
+    padding: 18px 35px !important;
+    margin-top: 16px !important;
+    border-radius: var(--border-radius-round) !important;
+    cursor: pointer !important;
+    box-shadow: var(--shadow-deep) !important;
+    transition: var(--transition-smooth) !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.banner__button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.banner__button:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow-extra-deep) !important;
+    background: linear-gradient(145deg, #1a73e8, #1557b0) !important;
+}
+
+.banner__button:hover::before {
+    left: 100%;
+}
+
+.banner__button:active {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-deep), var(--shadow-inset) !important;
+}
+
+/* Botones de productos */
+.product__card-boton {
+    display: inline-block !important;
+    padding: 12px 25px !important;
+    margin-top: 10px !important;
+    border: none !important;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0) !important;
+    color: var(--color_fondo-o-letra_botones-2) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: var(--fuente_principal) !important;
+    border-radius: var(--border-radius-button) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    box-shadow: var(--shadow-light) !important;
+    transition: var(--transition-smooth) !important;
+    border: 2px solid transparent !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.product__card-boton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(26, 115, 232, 0.1), transparent);
+    transition: left 0.4s;
+}
+
+.product__card-boton:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-medium) !important;
+    border-color: var(--color_fondo-o-letra_botones-2) !important;
+    background: linear-gradient(145deg, #f8f8f8, #e8e8e8) !important;
+    text-decoration: none !important;
+}
+
+.product__card-boton:hover::before {
+    left: 100%;
+}
+
+.product__card-boton:active {
+    transform: translateY(0) !important;
+    box-shadow: var(--shadow-light), var(--shadow-inset) !important;
+}
+
+/* Botón de contacto */
+.contacto__button {
+    padding: 18px 35px !important;
+    background: linear-gradient(145deg, var(--color_fondo-o-letra_botones-2), #1a73e8) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: var(--border-radius-round) !important;
+    margin-top: 1rem !important;
+    cursor: pointer !important;
+    box-shadow: var(--shadow-deep) !important;
+    transition: var(--transition-smooth) !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+}
+
+.contacto__button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.contacto__button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: var(--shadow-extra-deep) !important;
+    background: linear-gradient(145deg, #1a73e8, #1557b0) !important;
+}
+
+.contacto__button:hover::before {
+    left: 100%;
+}
+
+.contacto__button:active {
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-medium), var(--shadow-inset) !important;
+}
+
+/* Botones de búsqueda */
+.header__search-button {
+    cursor: pointer !important;
+    border: none !important;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0) !important;
+    padding: 8px 12px !important;
+    border-radius: 50% !important;
+    box-shadow: var(--shadow-light) !important;
+    transition: var(--transition-smooth) !important;
+}
+
+.header__search-button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-medium) !important;
+    background: linear-gradient(145deg, #f8f8f8, #e8e8e8) !important;
+}
+
+.header__search-button:active {
+    transform: translateY(0) !important;
+    box-shadow: var(--shadow-inset) !important;
+}
+
+/* Cards de productos con mayor profundidad */
+.product__card {
+    margin: 5px !important;
+    gap: 2px !important;
+    box-shadow: var(--shadow-medium) !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: linear-gradient(145deg, #ffffff, #f8f8f8) !important;
+    transition: var(--transition-smooth) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.product__card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: var(--shadow-extra-deep) !important;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0) !important;
+    cursor: pointer !important;
+}
+
+.product__card:active {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-deep) !important;
+}
+
+/* Efectos para el contenedor de búsqueda */
+.header__search {
+    background: linear-gradient(145deg, #f5f5f5, #e8e8e8) !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 20rem !important;
+    padding: 12px 20px !important;
+    justify-content: space-between !important;
+    border-radius: var(--border-radius-round) !important;
+    transition: var(--transition-smooth) !important;
+    box-shadow: var(--shadow-light) !important;
+    border: 2px solid transparent !important;
+}
+
+.header__search:hover {
+    box-shadow: var(--shadow-medium) !important;
+    transform: translateY(-1px) !important;
+    background: linear-gradient(145deg, #f8f8f8, #e0e0e0) !important;
+    border-color: var(--color_fondo-o-letra_botones-2) !important;
+}
+
+.header__search:focus-within {
+    box-shadow: var(--shadow-deep) !important;
+    border-color: var(--color_fondo-o-letra_botones-2) !important;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0) !important;
+}
+
+/* Animación de pulsación para todos los botones */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.banner__button:focus,
+.contacto__button:focus,
+.header__login-button:focus {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* Efectos de profundidad para inputs del formulario */
+.contacto__textBox {
+    display: flex !important;
+    flex-direction: column !important;
+    background: linear-gradient(145deg, #ffffff, #f8f8f8) !important;
+    padding: 15px !important;
+    margin: 1.3rem 0 !important;
+    border-radius: 20px !important;
+    box-shadow: var(--shadow-light) !important;
+    color: rgba(36, 57, 85, 0.11) !important;
+    border: 2px solid transparent !important;
+    transition: var(--transition-smooth) !important;
+}
+
+.contacto__textBox:hover {
+    box-shadow: var(--shadow-medium) !important;
+    transform: translateY(-1px) !important;
+    border-color: var(--color_fondo-o-letra_botones-2) !important;
+}
+
+.contacto__textBox:focus-within {
+    box-shadow: var(--shadow-deep) !important;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0) !important;
+    border-color: var(--color_fondo-o-letra_botones-2) !important;
+}
+
+/* Efectos adicionales para hover en elementos interactivos */
+.product__mostrar {
+    transition: var(--transition-smooth) !important;
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+}
+
+.product__mostrar:hover {
+    background: linear-gradient(145deg, rgba(26, 115, 232, 0.1), rgba(26, 115, 232, 0.05)) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-light) !important;
+}
+
+/* Responsividad para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .header__login-button,
+    .banner__button,
+    .contacto__button {
+        padding: 14px 25px !important;
+        font-size: 14px !important;
+    }
+    
+    .product__card {
+        border-radius: 15px !important;
+        padding: 15px !important;
+    }
+    
+    .header__search {
+        width: 15rem !important;
+        padding: 10px 16px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header__login-button {
+        padding: 12px 20px !important;
+        margin: 0 0.5rem !important;
+    }
+    
+    .banner__button,
+    .contacto__button {
+        padding: 16px 30px !important;
+    }
+    
+    .contacto__textBox {
+        border-radius: 15px !important;
+        padding: 12px !important;
+    }
+}
