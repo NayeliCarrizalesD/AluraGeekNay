@@ -158,10 +158,10 @@
     text-transform: uppercase;
     margin: 8px 0;
     padding: 4px 12px;
-    background: linear-gradient(145deg, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.05));
+    background: linear-gradient(145deg, rgba(201, 122, 146, 0.1), rgba(201, 122, 146, 0.05));
     border-radius: 15px;
     display: inline-block;
-    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(201, 122, 146, 0.2);
     letter-spacing: 0.5px;
 }
 
