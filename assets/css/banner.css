@@ -56,12 +56,12 @@
 }
 
 .banner__button:hover {
-    box-shadow: 10px 5px 10px 5px rgba(22, 26, 45, 0.11);
+    box-shadow: 10px 5px 10px 5px rgba(45, 22, 39, 0.11);
     transform: scale(1.02);
 }
 
 .banner__button:active {
-    box-shadow: inset 0 0 30px 8px rgba(22, 26, 45, 0.11), 0 0 5px 1px #000000;
+    box-shadow: inset 0 0 30px 8px rgba(45, 22, 39, 0.11), 0 0 5px 1px #000000;
     transform: scale(0.99);
 }
 
