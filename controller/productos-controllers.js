@@ -119,6 +119,46 @@ const buscarProductos = async (termino) => {
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductosPorCategorias();
     
+    // Delegación de eventos para eliminar producto
+    document.addEventListener('click', async (e) => {
+        const btnDelete = e.target.closest('.btnDelete') || (e.target.matches('[data-delete]') ? e.target : null);
+        if (btnDelete) {
+            e.preventDefault();
+            const card = btnDelete.closest('.product__card');
+            const id = card ? card.dataset.id : null;
+            if (!id) return;
+
+            const confirmar = typeof Swal !== 'undefined'
+                ? await Swal.fire({
+                    title: '¿Eliminar producto?',
+                    text: 'Esta acción no se puede deshacer.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then(res => res.isConfirmed)
+                : confirm('¿Deseas eliminar este producto?');
+
+            if (confirmar) {
+                try {
+                    await productosServicios.eliminarProducto(id);
+                    if (card) card.remove();
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Eliminado',
+                            text: 'El producto ha sido eliminado.',
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
+                } catch (err) {
+                    console.error('Error al eliminar producto:', err);
+                }
+            }
+        }
+    });
+
     // Configurar búsqueda si existe el elemento
     const searchButton = document.getElementById('search__action');
     const searchInput = document.getElementById('search__items');
