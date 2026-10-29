@@ -28,7 +28,7 @@ const renderizarProductos = async (contenedor, categoria, limite = 6) => {
     try {
         const productos = await productosServicios.obtenerProductosPorCategoria(categoria);
         
-        if (!productos || productos.length === 0) {
+        if (!productos || !Array.isArray(productos) || productos.length === 0) {
             contenedor.innerHTML = '<p class="no-products">No hay productos disponibles en esta categoría</p>';
             return;
         }
@@ -39,7 +39,7 @@ const renderizarProductos = async (contenedor, categoria, limite = 6) => {
         // Limitar la cantidad de productos mostrados
         const productosLimitados = productos.slice(0, limite);
         
-        productosLimitados.forEach(producto => {
+        if (Array.isArray(productosLimitados)) productosLimitados.forEach(producto => {
             const tarjetaProducto = nuevoProducto(
                 producto.name,
                 producto.imageUrl,
