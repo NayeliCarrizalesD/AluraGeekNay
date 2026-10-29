@@ -4,10 +4,15 @@ import { productosServicios } from "../servicios/productos-servicios.js";
 const nuevoProducto = (name, imageUrl, price, id) => {
     const card = document.createElement("div");
     card.className = "product__card";
+    const esAdmin = window.location.pathname.includes("adminProducts");
+    const esScreens = window.location.pathname.includes("screens");
+    const rutaBase = esScreens ? "" : "screens/";
+    const rutaAssets = esScreens ? "../" : "";
+
     const contenido = `
-        <div class="product__card-edit hidden">
-            <button class="btnDelete" type="button"><img src="assets/img/icons/delete.svg" alt="delete_icon" class="iconEdit" data-delete></button>
-            <a href="screens/edit-product.html?id=${id}"><img src="assets/img/icons/edit.svg" alt="edit_icon" class="iconEdit" data-edit></a>
+        <div class="product__card-edit ${esAdmin ? '' : 'hidden'}">
+            <button class="btnDelete" type="button"><img src="${rutaAssets}assets/img/icons/delete.svg" alt="delete_icon" class="iconEdit" data-delete></button>
+            <a href="${rutaBase}edit-product.html?id=${id}"><img src="${rutaAssets}assets/img/icons/edit.svg" alt="edit_icon" class="iconEdit" data-edit></a>
         </div>
         <div class="imgContainer">
             <img class="product__card--img" src="${imageUrl}" alt="imagen_del_producto">
@@ -15,7 +20,7 @@ const nuevoProducto = (name, imageUrl, price, id) => {
         <div class="product__card--info">
             <p class="product__card--title">${name}</p>
             <p class="product__card--price">${price}</p>
-            <a href="screens/viewProducts.html?id=${id}" class="product__card-boton" data-verProducto>Ver producto</a>
+            <a href="${rutaBase}viewProducts.html?id=${id}" class="product__card-boton" data-verProducto>Ver producto</a>
         </div>
     `;
     card.innerHTML = contenido;
@@ -55,12 +60,13 @@ const renderizarProductos = async (contenedor, categoria, limite = 6) => {
     }
 }
 
-// Función para cargar todos los productos por categorías
+// Función para cargar todos los productos por categorías o en vista general
 const cargarProductosPorCategorias = async () => {
-    // Contenedores de las diferentes categorías
-    const starWarsContainer = document.querySelector('[data-starWarsCategory]');
-    const consolasContainer = document.querySelector('[data-consolasCategoria]');
-    const diversosContainer = document.querySelector('[data-diversosCategoria]');
+    // Contenedores de las diferentes categorías en la página principal
+    const starWarsContainer = document.querySelector('[data-starWarsCategory], [data-starwarscategory]');
+    const consolasContainer = document.querySelector('[data-consolasCategoria], [data-consolascategoria]');
+    const diversosContainer = document.querySelector('[data-diversosCategoria], [data-diversoscategoria]');
+    const adminProductsContainer = document.querySelector('[data-adminProducts], [data-adminproducts]');
 
     // Renderizar productos por categoría
     if (starWarsContainer) {
@@ -73,6 +79,24 @@ const cargarProductosPorCategorias = async () => {
     
     if (diversosContainer) {
         await renderizarProductos(diversosContainer, 'Diversos');
+    }
+
+    // Renderizar todos los productos si estamos en allProducts o adminProducts
+    if (adminProductsContainer) {
+        try {
+            const todos = await productosServicios.listaProductos();
+            if (todos && todos.length > 0) {
+                adminProductsContainer.innerHTML = '';
+                todos.forEach(producto => {
+                    const tarjeta = nuevoProducto(producto.name, producto.imageUrl, producto.price, producto.id);
+                    adminProductsContainer.appendChild(tarjeta);
+                });
+            } else {
+                adminProductsContainer.innerHTML = '<p class="no-products">No hay productos registrados</p>';
+            }
+        } catch (e) {
+            console.error('Error al cargar lista completa de productos:', e);
+        }
     }
 }
 
@@ -105,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const termino = searchInput.value.trim();
             if (termino) {
                 const resultados = await buscarProductos(termino);
-                // Aquí puedes agregar lógica para mostrar los resultados de búsqueda
                 console.log('Resultados de búsqueda:', resultados);
             }
         });
