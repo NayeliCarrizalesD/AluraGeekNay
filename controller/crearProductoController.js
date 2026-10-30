@@ -1,7 +1,28 @@
 import { productosServicios } from "../servicios/productos-servicios.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const form = document.querySelector('[data-form]');
+    const categoriaSelect = document.querySelector('[data-categoria]');
+
+    // Cargar categorías existentes en el selector
+    if (categoriaSelect) {
+        try {
+            const categorias = await productosServicios.obtenerCategorias();
+            if (categorias && categorias.length > 0) {
+                // Mantener las clásicas y agregar cualquier nueva
+                const categoriasUnicas = Array.from(new Set(['StarWars', 'Consolas', 'Diversos', ...categorias]));
+                categoriaSelect.innerHTML = '<option disabled selected value="">Selecciona la sección</option>';
+                categoriasUnicas.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat;
+                    opt.textContent = cat;
+                    categoriaSelect.appendChild(opt);
+                });
+            }
+        } catch (e) {
+            console.warn('Error al cargar categorías en selector:', e);
+        }
+    }
 
     if (form) {
         form.addEventListener('submit', async (e) => {
@@ -10,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const url = document.querySelector('[data-url]')?.value.trim() || '';
             const nombre = document.querySelector('[data-nombre]')?.value.trim() || '';
             const precio = document.querySelector('[data-precio]')?.value.trim() || '';
-            const categoriaSelect = document.querySelector('[data-categoria]');
             const categoria = categoriaSelect ? categoriaSelect.value : '';
             const descripcion = document.querySelector('[data-descripcion]')?.value.trim() || '';
 
