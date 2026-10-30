@@ -1,5 +1,17 @@
 import { productosServicios } from "../servicios/productos-servicios.js";
 
+// Resolver ruta de imagen (local o remota) con soporte para espacios y subcarpetas
+const resolverRutaImagen = (url, esScreens) => {
+    const fallback = `${esScreens ? '../' : ''}assets/img/productos/product_details/starwar_glass2.png`;
+    if (!url) return fallback;
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+        return url;
+    }
+    const limpia = url.replace(/^\.?\/?(screens\/)?/, '');
+    const rutaFinal = esScreens ? `../${limpia}` : limpia;
+    return encodeURI(rutaFinal);
+};
+
 // Función para crear la tarjeta de producto
 const nuevoProducto = (name, imageUrl, price, id) => {
     const card = document.createElement("div");
@@ -8,6 +20,8 @@ const nuevoProducto = (name, imageUrl, price, id) => {
     const esScreens = window.location.pathname.includes("screens");
     const rutaBase = esScreens ? "" : "screens/";
     const rutaAssets = esScreens ? "../" : "";
+    const fallbackImg = `${rutaAssets}assets/img/productos/product_details/starwar_glass2.png`;
+    const srcImg = resolverRutaImagen(imageUrl, esScreens);
 
     const contenido = `
         <div class="product__card-edit ${esAdmin ? '' : 'hidden'}">
@@ -15,7 +29,7 @@ const nuevoProducto = (name, imageUrl, price, id) => {
             <a href="${rutaBase}edit-product.html?id=${id}"><img src="${rutaAssets}assets/img/icons/edit.svg" alt="edit_icon" class="iconEdit" data-edit></a>
         </div>
         <div class="imgContainer">
-            <img class="product__card--img" src="${imageUrl}" alt="imagen_del_producto">
+            <img class="product__card--img" src="${srcImg}" alt="${name}" onerror="this.onerror=null; this.src='${fallbackImg}';">
         </div>
         <div class="product__card--info">
             <p class="product__card--title">${name}</p>

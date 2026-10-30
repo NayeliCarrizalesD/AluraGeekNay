@@ -1,14 +1,21 @@
 import { PRODUCTOS_INICIALES } from "./productos-data.js";
 
-// URL de tu MockAPI activa en la nube
-const API_URL = "https://6ae3c202933120ae20f9257e.mockapi.io/api/v1/productos";
+// Endpoint de la API propia integrada en Vercel
+const obtenerApiUrl = () => {
+    if (typeof window !== 'undefined' && window.location && window.location.origin) {
+        return `${window.location.origin}/api/productos`;
+    }
+    return "/api/productos";
+};
+
+const API_URL = obtenerApiUrl();
 
 // Normalizar producto para tolerar nombres de campos en español o inglés (ej. categoria vs category)
 const normalizarProducto = (p, index) => {
     return {
         id: String(p.id || index + 1),
         name: p.name || p.nombre || p.title || `Producto ${index + 1}`,
-        imageUrl: p.imageUrl || p.image || p.img || p.foto || p.avatar || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60",
+        imageUrl: p.imageUrl || p.image || p.img || p.foto || p.avatar || "assets/img/productos/product_details/starwar_glass2.png",
         price: p.price || p.precio || "$ 25.00",
         categoria: (p.categoria || p.category || p.seccion || "Diversos").trim(),
         description: p.description || p.descripcion || p.detalle || ""
@@ -22,13 +29,17 @@ const obtenerDeLocalStorage = () => {
         if (guardados) {
             const parsed = JSON.parse(guardados);
             if (Array.isArray(parsed) && parsed.length > 0) {
-                return parsed.map((p, i) => normalizarProducto(p, i));
+                // Si los datos guardados tenían imágenes antiguas de Unsplash que fallaban, actualizarlos
+                const tienenImagenesViejas = parsed.some(p => p.imageUrl && p.imageUrl.includes('images.unsplash.com'));
+                if (!tienenImagenesViejas) {
+                    return parsed.map((p, i) => normalizarProducto(p, i));
+                }
             }
         }
     } catch (e) {
         console.warn("No se pudo leer localStorage:", e);
     }
-    // Si no hay datos guardados aún, inicializamos con los 18 productos por defecto
+    // Inicializamos con el catálogo garantizado
     const iniciales = PRODUCTOS_INICIALES.map((p, i) => normalizarProducto(p, i));
     guardarEnLocalStorage(iniciales);
     return iniciales;
@@ -60,7 +71,7 @@ const listaProductos = async () => {
             }
         }
     } catch (error) {
-        console.log("MockAPI no disponible o sin datos, usando catálogo integrado:", error);
+        console.log("API en la nube no disponible o usando modo local:", error);
     }
 
     return obtenerDeLocalStorage();
@@ -97,7 +108,7 @@ const obtenerCategorias = async () => {
 // GET - Obtener producto por ID
 const obtenerProducto = async (id) => {
     try {
-        const respuesta = await fetch(`${API_URL}/${id}`);
+        const respuesta = await fetch(`${API_URL}?id=${id}`);
         if (respuesta.ok) {
             const data = await respuesta.json();
             return normalizarProducto(data, 0);
@@ -114,7 +125,7 @@ const obtenerProducto = async (id) => {
 const crearProducto = async (name, imageUrl, price, categoria, description) => {
     const nuevo = {
         name,
-        imageUrl,
+        imageUrl: imageUrl || "assets/img/productos/product_details/starwar_glass2.png",
         price,
         categoria: categoria || "Diversos",
         description,
@@ -138,7 +149,7 @@ const crearProducto = async (name, imageUrl, price, categoria, description) => {
             return norm;
         }
     } catch (error) {
-        console.warn("No se pudo conectar a MockAPI al crear producto, guardando localmente:", error);
+        console.warn("No se pudo conectar a API al crear producto, guardando localmente:", error);
     }
 
     const actuales = obtenerDeLocalStorage();
@@ -158,7 +169,7 @@ const actualizarProducto = async (id, name, imageUrl, price, categoria, descript
     };
 
     try {
-        const respuesta = await fetch(`${API_URL}/${id}`, {
+        const respuesta = await fetch(`${API_URL}?id=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -192,7 +203,7 @@ const actualizarProducto = async (id, name, imageUrl, price, categoria, descript
 // DELETE - Eliminar producto
 const eliminarProducto = async (id) => {
     try {
-        const respuesta = await fetch(`${API_URL}/${id}`, {
+        const respuesta = await fetch(`${API_URL}?id=${id}`, {
             method: "DELETE"
         });
         if (respuesta.ok) {
